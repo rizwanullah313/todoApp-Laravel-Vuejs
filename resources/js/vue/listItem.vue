@@ -15,7 +15,31 @@
 <script>
 
 export default{
-    props: ['item']
+    props: ['item'],
+    methods: {
+        updatecheck(){
+            axios.put('api/item/' + this.item.id, {
+                item: this.item
+            }).then( response => {
+            if(response.status == 200){
+                this.$emit('itemchanged');
+            }
+        })
+        .catch( error => {
+            console.log( error);
+        })
+        },
+        removeItem(){
+            axios.delete('api/item/' + this.item.id)
+            .then( response => {
+                if( response.status == 200){
+                    this.$emit('itemchanged');
+                }
+            }).catch( error => {
+                console.log( error);
+            })
+        }
+    }
 
 }
 </script>
